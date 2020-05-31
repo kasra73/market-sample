@@ -12,4 +12,12 @@ class Product extends Model
      * @var array
      */
     protected $fillable = ['name', 'category_id', 'description', 'price', 'amount'];
+
+    /**
+     * Get the post that owns the comment.
+     */
+    public function category()
+    {
+        return $this->belongsTo('App\Category');
+    }
 }

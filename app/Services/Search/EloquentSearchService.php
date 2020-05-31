@@ -16,7 +16,10 @@ class EloquentSearchService implements SearchServiceInterface
             $queryBuilder->where('category_id', $category);
         }
         if ($query !== null) {
-            $queryBuilder->where('name', 'LIKE', "%$query%");
+            $queryBuilder->where(function ($q) use ($query) {
+                $q->where('name', 'LIKE', "%$query%")
+                    ->orWhere('description', 'LIKE', "%$query%");
+            });
         }
         $products = $queryBuilder->paginate($per_page, ['*'], 'page', $page);
         return $products;

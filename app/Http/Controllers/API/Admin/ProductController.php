@@ -4,7 +4,7 @@ namespace App\Http\Controllers\API\Admin;
 
 use App\File;
 use App\Http\Controllers\Controller;
-use App\Jobs\HandleFileUpload;
+use App\Jobs\HandleFileUploadJob;
 use Illuminate\Http\Request;
 use Illuminate\Support\Str;
 
