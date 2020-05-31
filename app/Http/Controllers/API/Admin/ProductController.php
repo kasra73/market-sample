@@ -30,7 +30,7 @@ class ProductController extends Controller
                 'uploaded_by' => auth()->user()->id
             ]);
             $fileRecord->save();
-            dispatch(new HandleFileUpload($fileRecord));
+            dispatch(new HandleFileUploadJob($fileRecord));
             return response()->json([
                 'status' => 'success',
                 'message' => 'file uploaded successfully',
