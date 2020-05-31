@@ -18,8 +18,11 @@ Route::middleware('auth:api')->group(function () {
     Route::get('/user', function (Request $request) {
         return $request->user();
     });
-    Route::get('/categories', 'API\Admin\CategoryController@index');
-    Route::post('/products/bulk', 'API\Admin\ProductController@bulk_insert');
+
+    Route::post('/admin/products/bulk', 'API\Admin\ProductController@bulk_insert');
 });
 
 Route::post('/auth/login', 'API\AuthenticateController@authenticate');
+
+Route::get('/products/categories', 'API\ProductController@categories');
+Route::get('/products/search', 'API\ProductController@search');
