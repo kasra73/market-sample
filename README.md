@@ -9,13 +9,21 @@ This is a sample market developed using laravel with following requirements:
 - search among products with categories filter capability and pagination
 - Have appropriate seeds and migration to initiate database
 
-## How to use
+## How to
 
-### Install
+### Install & Run
 
 - `composer install`
 - `php artisan migrate --seed`
 - `php artisan serve`
+
+### Run Tests
+
+- `php artisan test`
+
+### Run using Docker
+
+- `docker-compose up -d --build`
 
 ## License
 

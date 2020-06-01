@@ -1,0 +1,37 @@
+version: '2'
+services:
+  app:
+    build:
+      context: .
+      dockerfile: ./Dockerfile
+    ports:
+      - 8080:80
+    volumes:
+      - $PWD/docker-data/storage:/var/www/storage
+    working_dir: /var/www
+    environment:
+      ElASTICSEARCH_HOST: elasticsearch.datapirates.ir
+      APP_NAME: 'Market Sample'
+      APP_ENV: production
+      APP_KEY: 'base64:uo+AM3CENeN1wGAzl/beafvBExUasvWtWng5P1ZSSyo='
+      APP_DEBUG: 0
+      APP_URL: 'http://localhost:8080'
+      LOG_CHANNEL: stderr
+      LOG_STDERR_LEVEL: info
+      DB_CONNECTION: mysql
+      DB_HOST: 'db'
+      DB_PORT: 3306
+      DB_DATABASE: laravel_db
+      DB_USERNAME: root
+      DB_PASSWORD: password_abc
+  db:
+    image: mysql:5.7
+    volumes:
+      - ./docker-data/db:/var/lib/database
+    environment:
+      MYSQL_DATABASE: laravel_db
+      MYSQL_ROOT_PASSWORD: password_abc
+  redis:
+    image: redis
+    volumes:
+      - ./docker-data/redis:/data

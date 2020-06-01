@@ -76,6 +76,7 @@ return [
             'driver' => 'monolog',
             'handler' => StreamHandler::class,
             'formatter' => env('LOG_STDERR_FORMATTER'),
+            'level' => env('LOG_STDERR_LEVEL', 'debug'),
             'with' => [
                 'stream' => 'php://stderr',
             ],
