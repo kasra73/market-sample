@@ -11,6 +11,17 @@ return [
     |
     */
 
+    'provider' => env('SEARCH_PROVIDER', 'elasticsearch'),
+
+    'services' => [
+        'elasticsearch' => [
+            'class' => App\Services\Search\ElasticsearchSearchService::class
+        ],
+        'eloquent' => [
+            'class' => App\Services\Search\EloquentSearchService::class
+        ]
+    ],
+
     'products_index' => 'market_products',
 
     'elasticsearch' => [
