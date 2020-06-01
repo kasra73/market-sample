@@ -14,6 +14,13 @@ class Product extends Model
     protected $fillable = ['name', 'category_id', 'description', 'price', 'amount'];
 
     /**
+     * The attributes that should be hidden for arrays.
+     *
+     * @var array
+     */
+    protected $hidden = ['category_id', 'updated_at', 'created_at'];
+
+    /**
      * Get the post that owns the comment.
      */
     public function category()

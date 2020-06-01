@@ -74,6 +74,7 @@ class ElasticsearchSearchService implements SearchServiceInterface
         $ids = join(",", $productIds);
         // ids don't come from user inputs, so we assume it's secure to use without binding
         return Product::whereIn('id', $productIds)
+            ->with('category')
             ->orderBy(DB::raw("FIELD(id, $ids)"), 'ASC')
             ->get();
     }

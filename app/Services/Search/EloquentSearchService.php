@@ -11,7 +11,8 @@ class EloquentSearchService implements SearchServiceInterface
      */
     public function search(string $query = null, int $category = null, int $per_page = 10, int $page = 1)
     {
-        $queryBuilder = Product::query();
+        $queryBuilder = Product::query()
+            ->with('category');
         if ($category !== null) {
             $queryBuilder->where('category_id', $category);
         }
