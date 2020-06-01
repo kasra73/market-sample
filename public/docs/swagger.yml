@@ -1,0 +1,219 @@
+openapi: "3.0.0"
+info:
+  description: "This is the api specification for snapp market sample project."
+  version: "0.8.0"
+  title: "Market Sample"
+  termsOfService: ""
+  contact:
+    email: "kasraf1373@gmail.com"
+  license:
+    name: "BSD 3-Clause License"
+    url: "https://opensource.org/licenses/BSD-3-Clause"
+servers:
+  - url: 'https://market-sample.datapirates.ir/api/'
+    description: Online API
+  - url: 'https://localhost:8000/api/'
+    description: Local API
+tags:
+  - name: "public"
+    description: "Public endpoints"
+  - name: "user"
+    description: "Operations about user"
+externalDocs:
+  description: "Source code on Github"
+  url: "https://github.com/kasra73/market-sample"
+paths:
+  /categories:
+    get:
+      tags:
+      - "public"
+      summary: "list categories"
+      description: "Get all product categories"
+      operationId: "categories"
+      responses:
+        '200':
+          description: successful operation
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  products:
+                    type: array
+                    items:
+                      $ref: "#/components/schemas/Category"
+        default:
+          description: "successful operation"
+  /products/search:
+    get:
+      tags:
+      - "public"
+      summary: "Search products"
+      description: "Search for products based on different fields"
+      operationId: "search"
+      parameters:
+        - name: query
+          in: query
+          description: Any word or phrase to search for
+          required: false
+          schema:
+            type: string
+        - name: per_page
+          in: query
+          description: Number of items per page
+          required: false
+          schema:
+            type: integer
+        - name: page
+          in: query
+          description: Page number of results
+          required: false
+          schema:
+            type: integer
+        - name: category
+          in: query
+          description: category id to filter results
+          required: false
+          schema:
+            type: integer
+            format: int64
+      responses:
+        '200':
+          description: successful operation
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  products:
+                    type: array
+                    items:
+                      $ref: "#/components/schemas/Product"
+        default:
+          description: "successful operation"
+  /user:
+    get:
+      tags:
+      - "user"
+      summary: "User info"
+      description: "This can only be done by the logged in user."
+      operationId: "getUser"
+      responses:
+        '200':
+          description: successful operation
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/User"
+        default:
+          description: "successful operation"
+      security:
+        - bearerAuth: []
+  /auth/login:
+    post:
+      tags:
+      - "user"
+      summary: "Logs user into the system"
+      description: ""
+      operationId: "loginUser"
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/LoginRequest'
+      responses:
+        "200":
+          description: "successful operation"
+        "400":
+          description: "Invalid username/password supplied"
+components:
+  responses:
+    LoginResponse:
+      content:
+        application/json:
+          schema:
+            type: object
+            properties:
+              access_token:
+                type: string
+              token_type:
+                type: string
+              expires_in:
+                type: "integer"
+                example: 3600
+      description: User login response
+  securitySchemes:
+    bearerAuth:
+      type: http
+      scheme: bearer
+      bearerFormat: JWT
+  schemas:
+    Category:
+      type: "object"
+      properties:
+        id:
+          type: "integer"
+          format: "int64"
+        title:
+          type: "string"
+          example: "Dairy"
+    User:
+      type: "object"
+      properties:
+        id:
+          type: "integer"
+          format: "int64"
+        name:
+          type: "string"
+        email:
+          type: "string"
+        email_verified_at:
+          type: "string"
+          format: "date-time"
+        created_at:
+          type: "string"
+          format: "date-time"
+        updated_at:
+          type: "string"
+          format: "date-time"
+        role:
+          type: "string"
+          example: "admin"
+    Product:
+      type: "object"
+      required:
+      - "name"
+      - "photoUrls"
+      properties:
+        id:
+          type: "integer"
+          format: "int64"
+        name:
+          type: "string"
+          example: "Milk"
+        description:
+          type: "string"
+          example: "Horizon 2% Milk"
+        price:
+          type: "number"
+          example: "35435.00"
+        amount:
+          type: "integer"
+          example: 6
+        category:
+          $ref: "#/components/schemas/Category"
+    LoginRequest:
+      type: object
+      required:
+        - email
+        - password
+      properties:
+        username:
+          description: The user email
+          type: string
+          example: kasraf1373@gmail.com
+        password:
+          description: The password for login in clear text
+          type: string
+          example: test
