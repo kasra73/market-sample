@@ -19,7 +19,9 @@ Route::middleware('auth:api')->group(function () {
         return $request->user();
     });
 
-    Route::post('/admin/products/bulk', 'API\Admin\ProductController@bulk_insert');
+    Route::middleware('auth.role:admin')->prefix('admin')->group(function () {
+        Route::post('/products/bulk', 'API\Admin\ProductController@bulk_insert');
+    });
 });
 
 Route::post('/auth/login', 'API\AuthenticateController@authenticate');
