@@ -38,6 +38,7 @@ class IndexProductJob implements ShouldQueue
      */
     public function handle(ElasticsearchService $elasticsearchService)
     {
+        Log::debug('Index product in elasticsearch', [ 'product' => $this->product->id ]);
         $params = [
             'index' => config('search.products_index'),
             'type' => 'product',
