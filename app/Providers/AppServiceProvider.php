@@ -25,6 +25,7 @@ class AppServiceProvider extends ServiceProvider
     {
         $this->app->bind(
             'App\Services\Search\SearchServiceInterface',
+            // 'App\Services\Search\EloquentSearchService'
             'App\Services\Search\ElasticsearchSearchService'
         );
     }

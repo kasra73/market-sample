@@ -5,6 +5,8 @@ namespace App\Services\Search;
 use App\Product;
 use Elasticsearch\Client as ElasticsearchClient;
 use App\Services\ElasticsearchService;
+use Illuminate\Pagination\LengthAwarePaginator;
+use Illuminate\Pagination\Paginator;
 use Illuminate\Support\Facades\DB;
 
 class ElasticsearchSearchService implements SearchServiceInterface
@@ -63,10 +65,14 @@ class ElasticsearchSearchService implements SearchServiceInterface
         foreach($products as $product) {
             $productIds[] = $product['_id'];
         }
-        if (count ($productIds) === 0) {
-            return [];
+        if (count ($productIds) > 0) {
+            $items = $this->getSortedProducts($productIds);
+        } else {
+            $items = [];
         }
-        return $this->getSortedProducts($productIds);
+        return new LengthAwarePaginator($items, $result['hits']['total'], $per_page, $page, [
+            'path' => Paginator::resolveCurrentPath()
+        ]);
     }
 
     private function getSortedProducts(array $productIds)
