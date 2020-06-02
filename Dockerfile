@@ -36,6 +36,10 @@ WORKDIR /var/www
 RUN sed -ri -e 's!/var/www/html!${APACHE_DOCUMENT_ROOT}!g' /etc/apache2/sites-available/*.conf
 RUN sed -ri -e 's!/var/www/!${APACHE_DOCUMENT_ROOT}!g' /etc/apache2/apache2.conf /etc/apache2/conf-available/*.conf
 
+# Enable Apacke mode_rewrite
 RUN a2enmod rewrite
+ 
+# copy example .env file
+RUN cp .env.example .env
 
 RUN composer install --no-dev --no-interaction
