@@ -4,8 +4,8 @@ services:
     build:
       context: .
       dockerfile: ./Dockerfile
-    ports:
-      - 8080:80
+    # ports:
+    #   - 8080:80
     volumes:
       - $PWD/docker-data/storage:/var/www/storage
     working_dir: /var/www
@@ -25,6 +25,13 @@ services:
       DB_DATABASE: laravel_db
       DB_USERNAME: root
       DB_PASSWORD: password_abc
+    labels:
+      - "traefik.frontend.rule=Host:market-sample.datapirates.ir"
+      - "traefik.port=80"
+      - "traefik.docker.network=traefik_default"
+    networks:
+      app_internal:
+      traefik_default:
   db:
     image: mysql:5.7
     volumes:
@@ -32,7 +39,16 @@ services:
     environment:
       MYSQL_DATABASE: laravel_db
       MYSQL_ROOT_PASSWORD: password_abc
+    networks:
+      app_internal:
   redis:
     image: redis
     volumes:
       - ./docker-data/redis:/data
+    networks:
+      app_internal:
+
+networks:
+  app_internal:
+  traefik_default:
+    external: true
