@@ -1,0 +1,13 @@
+<div class="container mt-4">
+    <div class="upload-file-container" (click)="fileInput.click()" appDragDrop (fileDropped)="uploadFile($event)">
+        <input hidden type="file" #fileInput (change)="uploadFile($event.target.files)" accept=".csv">
+    </div>
+    <div><a href="../../../../assets/sample.csv" download="sample.csv">Download sample CSV file</a></div>
+    <div class="files-list" *ngFor="let file of files;let i=index">
+        <p> {{ file.name }}, Progress: {{ file.progress }},
+            Status: <span class="badge" [ngClass]="['badge-' + file.badge]">{{ file.status }}</span> </p>
+        <button class="delete-file" (click)="deleteAttachment(i)">
+            <img src="../../../../assets/recycle-bin.png">
+        </button>
+    </div>
+</div>

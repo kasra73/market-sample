@@ -14,6 +14,7 @@ import { PaginatedResult } from 'src/app/models/PaginatedResult';
 export class ProductsComponent implements OnInit {
   query: string;
   products: PaginatedResult<Product>;
+  loading = true;
 
   constructor(private route: ActivatedRoute, private productsService: ProductsService) { }
 
@@ -23,6 +24,7 @@ export class ProductsComponent implements OnInit {
       if (params.has('q')) {
         this.query = params.get('q');
       }
+      this.loading = true;
       this.search();
     });
   }
@@ -30,6 +32,7 @@ export class ProductsComponent implements OnInit {
   search(): void {
     this.productsService.search(this.query, null, 1, 9).subscribe((res) => {
       this.products = res;
+      this.loading = false;
     });
   }
 
