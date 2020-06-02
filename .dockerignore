@@ -2,3 +2,5 @@
 /vendor
 .vscode
 .idea
+/docker-data
+/resources/frontend
