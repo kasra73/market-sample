@@ -9,6 +9,8 @@ This is a sample market developed using laravel with following requirements:
 - search among products with categories filter capability and pagination
 - Have appropriate seeds and migration to initiate database
 
+An angular spa app is also included with login & search capabilities. (pagination and category filter is not included in ui)
+
 ## How to
 
 ### Install & Run
@@ -24,6 +26,8 @@ This is a sample market developed using laravel with following requirements:
 ### Run using Docker
 
 - `docker-compose up -d --build`
+- `chown 33:33 -R docker-data/storage`
+- `docker-compose exec app php artisan migrate --seed`
 
 ## License
 
