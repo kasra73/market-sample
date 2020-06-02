@@ -24,7 +24,7 @@ export class AuthService {
   }
 
   login(email: string, password: string) {
-    return this.http.post('http://localhost:8000/api/auth/login', { email, password })
+    return this.http.post('/api/auth/login', { email, password })
       .pipe(
         tap(res => this.setSession(res)),
         tap((res) => this.getUserInfo())
@@ -60,7 +60,7 @@ export class AuthService {
 
   private getUserInfo() {
     const accessToken = localStorage.getItem('access_token');
-    this.http.get<User>('http://localhost:8000/api/user', {
+    this.http.get<User>('/api/user', {
       headers: {
         Authorization: 'Bearer ' + accessToken,
       }

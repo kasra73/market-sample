@@ -26,7 +26,7 @@ export class ProductsService {
       params.category = category.toString();
     }
     return this.http.get<{ products: PaginatedResult<Product> }>(
-      'http://localhost:8000/api/products/search', { params }
+      '/api/products/search', { params }
     ).pipe(
       map((result) => {
         return result.products;

@@ -21,7 +21,7 @@ export class AdminService {
       reportProgress: true,
       headers,
     };
-    const req = new HttpRequest('POST', 'http://localhost:8000/api/admin/products/bulk', formData, options);
+    const req = new HttpRequest('POST', '/api/admin/products/bulk', formData, options);
     return this.http.request(req);
   }
 }
