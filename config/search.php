@@ -29,8 +29,8 @@ return [
             env('ElASTICSEARCH_HOST')
         ],
         'auth' => 'basic',
-        'username' => 'elastic',
-        'password' => 'trA3/E/Njd2wjB4T43Lgzw=='
+        'username' => env('ElASTICSEARCH_USERNAME'),
+        'password' => env('ElASTICSEARCH_PASSWORD')
     ],
 
 ];

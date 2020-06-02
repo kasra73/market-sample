@@ -16,6 +16,7 @@ services:
       APP_KEY: 'base64:uo+AM3CENeN1wGAzl/beafvBExUasvWtWng5P1ZSSyo='
       APP_DEBUG: 0
       APP_URL: 'http://localhost:8080'
+      JWT_SECRET: 'Q4bZZVKjnceDya2uZGJrEdFs56pV9sbM3kTCWJfwowUWf45RX8BKf0hP79C5lKhd'
       LOG_CHANNEL: stderr
       LOG_STDERR_LEVEL: info
       DB_CONNECTION: mysql
