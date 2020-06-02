@@ -26,6 +26,7 @@ services:
       DB_USERNAME: root
       DB_PASSWORD: password_abc
       REDIS_HOST: redis
+      REDIS_PASSWORD: redis_password
       SESSION_DRIVER: redis
       CACHE_DRIVER: redis
     labels:
@@ -45,9 +46,12 @@ services:
     networks:
       app_internal:
   redis:
-    image: redis
+    image: 'bitnami/redis:latest'
+    restart: always
+    environment:
+      - REDIS_PASSWORD=redis_password
     volumes:
-      - ./docker-data/redis:/data
+      - ./docker-data/redis-data:/bitnami/redis/data
     networks:
       app_internal:
 
