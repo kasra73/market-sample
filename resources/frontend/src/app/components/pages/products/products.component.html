@@ -17,5 +17,7 @@
                 </div>
             </div>
         </div>
+        <ngb-pagination maxSize=5 rotate=true [(page)]="products.current_page" [pageSize]="products.per_page"
+            [collectionSize]="products.total" (pageChange)="pageChange($event)"></ngb-pagination>
     </ng-template>
 </div>

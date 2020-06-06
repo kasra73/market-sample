@@ -1,7 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { ActivatedRoute } from '@angular/router';
-import { Observable } from 'rxjs';
-import { switchMap } from 'rxjs/operators';
+import { ActivatedRoute, Params, Router } from '@angular/router';
 import { ProductsService } from 'src/app/services/products.service';
 import { Product } from 'src/app/models/product';
 import { PaginatedResult } from 'src/app/models/PaginatedResult';
@@ -13,16 +11,25 @@ import { PaginatedResult } from 'src/app/models/PaginatedResult';
 })
 export class ProductsComponent implements OnInit {
   query: string;
+  page: number;
   products: PaginatedResult<Product>;
   loading = true;
 
-  constructor(private route: ActivatedRoute, private productsService: ProductsService) { }
+  constructor(private activatedRoute: ActivatedRoute, private productsService: ProductsService, public router: Router) { }
 
   ngOnInit(): void {
-    this.route.paramMap.subscribe((params) => {
+    this.activatedRoute.paramMap.subscribe((params) => {
       this.query = '';
       if (params.has('q')) {
         this.query = params.get('q');
+      }
+      if (params.has('page')) {
+        const page = Number(params.get('page'));
+        if (isNaN(page)) {
+          this.page = 1;
+        } else {
+          this.page = page;
+        }
       }
       this.loading = true;
       this.search();
@@ -30,10 +37,13 @@ export class ProductsComponent implements OnInit {
   }
 
   search(): void {
-    this.productsService.search(this.query, null, 1, 9).subscribe((res) => {
+    this.productsService.search(this.query, null, this.page, 9).subscribe((res) => {
       this.products = res;
       this.loading = false;
     });
   }
 
+  pageChange(page: number): void {
+    this.router.navigate(['search', { q: this.query, page }]);
+  }
 }
