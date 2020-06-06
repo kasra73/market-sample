@@ -30,7 +30,7 @@ class ElasticsearchSearchService implements SearchServiceInterface
     {
         // ignore elasticsearch if query is null
         if ($query === null) {
-            $queryBuilder = Product::query();
+            $queryBuilder = Product::with('category');
             if ($category !== null) {
                 $queryBuilder->where('category_id', $category);
             }
